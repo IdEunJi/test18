@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{
+      margin:0; padding:0;
+      box-sizing: border-box;
+      font-size:10px;
+      color:#333;
+    }
+    body{
+      width:100%; height:100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    table{
+      width:70rem; height: auto;
+      border:0.2rem solid lightskyblue;
+    }
+    body>div{
+      width:70rem; height:5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border:0.2rem solid lightskyblue;
+      background-color: lightskyblue;
+      border-bottom: none;
+    }
+    body>div>h1{
+      width:auto; height:auto;
+      font-size:2.4rem;
+    }
+    thead>tr>th{
+      padding:0.5rem 0;
+      font-size:1.8rem; 
+    }
+    tbody{
+      width:100%; height: auto;
+    }
+    tbody>tr>td{
+      padding:1rem 0;
+      font-size:1.6rem;
+      text-align: center;
+    }
+
+  </style>
+  <title>Test18</title>
+</head>
+<body>
+  <div>
+    <h1>시험 점수</h1>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>국어</th>
+        <th>수학</th>
+        <th>영어</th>
+        <th>합</th>
+        <th>평균</th>
+      </tr>
+    </thead>
+    <tbody id="testTbody">
+    </tbody>
+  </table>
+  <script>
+    const test_array = [
+      { 
+        name: "장원영",
+        korean: 92,
+        math: 85,
+        english: 100  
+      },
+      { 
+        name: "김채원",
+        korean: 95,
+        math: 82,
+        english: 85  
+      },
+      { 
+        name: "임윤아",
+        korean: 100,
+        math: 85,
+        english: 90  
+      }
+    ];
+
+    class MakeTestTable{
+      constructor(testTbody, testName, testKorean, testMath, testEnglish){
+        this.testTbody = testTbody;
+        this.testName = testName;
+        this.testKorean = testKorean;
+        this.testMath = testMath;
+        this.testEnglish = testEnglish;
+        this.testSum = 0;
+        this.testAvg = 0;
+      }
+
+      testCalculator(){
+        this.testSum = this.testKorean + this.testMath + this.testEnglish;
+        this.testAvg = (this.testSum/3).toFixed(2);
+      }
+
+      tableMake(){
+        const tdArray = [this.testName, this.testKorean, this.testMath, this.testEnglish, this.testSum, this.testAvg];
+        const tr = document.createElement("tr");
+        let i = 0;
+        while(i<tdArray.length){
+          console.log("td make!");
+          let td = document.createElement("td");
+          td.append(`${tdArray[i]}`);
+          tr.append(td);
+          i++;
+        }
+        this.testTbody.append(tr);
+      }
+
+      makeTestTableRun(){
+        this.testCalculator();
+        this.tableMake();
+      }
+    }
+
+    const testTbody = document.getElementById("testTbody");
+    let i = 0;
+    while(i<test_array.length){
+      let {name, korean, math, english} = test_array[i];
+      console.log(test_array[i]);
+      let makeTestTable = new MakeTestTable(testTbody, name, korean, math, english);
+      makeTestTable.makeTestTableRun();
+      i++;
+    }
+  </script>
+</body>
+</html>
